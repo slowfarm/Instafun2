@@ -15,7 +15,6 @@ import eva.android.com.instafun2.data.Users;
 
 public class UserGetTask extends AsyncTask<Void, Void, ArrayList<Users>> {
 
-    private String resultJson = "";
     ArrayList<Users> users = new ArrayList<>();
     private CharSequence query;
     private String token;
@@ -39,7 +38,7 @@ public class UserGetTask extends AsyncTask<Void, Void, ArrayList<Users>> {
             while ((line = reader.readLine()) != null) {
                 buffer.append(line);
             }
-            resultJson = buffer.toString();
+            String resultJson = buffer.toString();
             users.addAll(new JSONParser().usersParser(resultJson));
         } catch (Exception e) {
             e.printStackTrace();

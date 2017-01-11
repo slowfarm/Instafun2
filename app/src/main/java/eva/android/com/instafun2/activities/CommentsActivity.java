@@ -16,11 +16,8 @@ import eva.android.com.instafun2.R;
 
 public class CommentsActivity extends AppCompatActivity {
 
-    CommentsAdapter adapter;
-    RecyclerView recyclerView;
-    Comments comments;
-    String photo;
-    ImageView imageView;
+    private Comments comments;
+    private String photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +28,15 @@ public class CommentsActivity extends AppCompatActivity {
             comments = intent.getParcelableExtra("data");
             photo = intent.getStringExtra("photo");
         }
-        imageView = (ImageView)findViewById(R.id.photo);
+        ImageView imageView = (ImageView) findViewById(R.id.photo);
         Picasso.with(this)
                 .load(photo)
                 .placeholder(R.drawable.ic_photo)
                 .error(R.drawable.ic_error)
                 .into(imageView);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CommentsAdapter(comments);
+        CommentsAdapter adapter = new CommentsAdapter(comments);
         recyclerView.setAdapter(adapter);
     }
 

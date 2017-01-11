@@ -21,7 +21,6 @@
             android:layout_gravity="bottom|center_horizontal"
             android:scaleType="fitCenter"
             android:layout_weight="1"
-            card_view:srcCompat="@drawable/ic_photo"
             android:layout_height="320px" />
 
     </android.support.v7.widget.CardView>

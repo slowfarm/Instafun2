@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -76,8 +77,13 @@ public class StartActivity extends AppCompatActivity {
                         startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(StartActivity.this,
+                                "Отсутствует доступ к странице пользователя",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
+                else Toast.makeText(StartActivity.this,"Ползователь с таким именем отсутствует",
+                            Toast.LENGTH_SHORT).show();
             }
         });
     }

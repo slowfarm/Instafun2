@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 import eva.android.com.instafun2.data.Users;
 
-/**
- * Created by u102 on 11.01.2017.
- */
 
 public class JSONParser {
     public ArrayList<Users> usersParser(String strJson) throws JSONException {
