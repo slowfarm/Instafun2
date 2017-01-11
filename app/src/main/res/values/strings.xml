@@ -3,4 +3,5 @@
     <string name="name">Начать поиск!</string>
     <string name="button">Начать</string>
     <string name="title_user_wall">Стена</string>
+    <string name="title_activity_comments">Комменты</string>
 </resources>
