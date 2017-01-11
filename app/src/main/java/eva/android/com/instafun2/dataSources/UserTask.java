@@ -7,25 +7,29 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+
+import eva.android.com.instafun2.data.Parser;
+import eva.android.com.instafun2.data.Users;
 
 
-public class UserDataGetTask extends AsyncTask<Void, Void, String> {
+public class UserTask extends AsyncTask<Void, Void, ArrayList<Users>> {
 
-    private String resultJson;
-    private String username;
-    private String maxId;
+    ArrayList<Users> users = new ArrayList<>();
+    private CharSequence query;
+    private String token;
 
-    public UserDataGetTask(String username, String maxId) {
-        this.username = username;
-        this.maxId = maxId;
+    public UserTask(CharSequence query, String token) {
+        this.query = query;
+        this.token = token;
     }
     @Override
-    protected String doInBackground(Void... params) {
+    protected ArrayList<Users> doInBackground(Void... params) {
+        String request = "https://api.instagram.com/v1/users/search?q="
+                +query+"&access_token="+token;
         try {
-            String request = "https://www.instagram.com/"+username+"/media/?max_id="+maxId;
             URL url = new URL(request);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
             urlConnection.connect();
             InputStream inputStream = urlConnection.getInputStream();
             StringBuilder buffer = new StringBuilder();
@@ -34,15 +38,16 @@ public class UserDataGetTask extends AsyncTask<Void, Void, String> {
             while ((line = reader.readLine()) != null) {
                 buffer.append(line);
             }
-            resultJson = buffer.toString();
+            String resultJson = buffer.toString();
+            users.addAll(new Parser().usersParser(resultJson));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return resultJson;
+        return users;
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(ArrayList<Users> result) {
         super.onPostExecute(result);
     }
 }

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import eva.android.com.instafun2.R;
-import eva.android.com.instafun2.dataSources.UserGetTask;
+import eva.android.com.instafun2.dataSources.UserTask;
 import eva.android.com.instafun2.data.Users;
 
 public class AutocompleteAdapter extends ArrayAdapter implements Filterable {
@@ -48,7 +48,7 @@ public class AutocompleteAdapter extends ArrayAdapter implements Filterable {
                     try{
                         //get data from the web
                         String term = constraint.toString();
-                        mCountry = new UserGetTask(term, mToken).execute().get();
+                        mCountry = new UserTask(term, mToken).execute().get();
                     }catch (Exception e){
                         e.printStackTrace();
                     }

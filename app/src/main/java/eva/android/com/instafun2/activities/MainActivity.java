@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
             +redirectUri+"&scope=basic+public_content&response_type=token";
     String login = "kypopthblu_poma";
     String password = "suzumo15";
+
+    final String javaScript = "javascript: {" +
+            "document.getElementById('id_username').value = '"+login +"';" +
+            "document.getElementById('id_password').value = '"+password+"';" +
+            "document.getElementsByClassName('button-green')[0].click();};";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadUrl(url);
+
     }
 
     private class MyWebViewClient extends WebViewClient
@@ -35,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url)
         {
-            if (url.contains(redirectUri)) {
+            if (url.contains("token=")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("url", url);
                 Intent intent = new Intent(getApplicationContext(), StartActivity.class);
@@ -51,10 +57,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(mWebView, url);
-            mWebView.loadUrl("javascript: {" +
-                    "document.getElementById('id_username').value = '"+login +"';" +
-                    "document.getElementById('id_password').value = '"+password+"';" +
-                    "document.getElementsByClassName('button-green')[0].click();};");
+            mWebView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mWebView.loadUrl(javaScript);
+                }
+            }, 500);
         }
     }
 }

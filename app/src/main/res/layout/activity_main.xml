@@ -4,7 +4,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="eva.android.com.instafun2.activities.MainActivity">
+    tools:context="eva.android.com.instafun2.activities.MainActivity"
+    android:background="@drawable/ic_hourglass">
 
     <WebView
         android:layout_width="0dp"
