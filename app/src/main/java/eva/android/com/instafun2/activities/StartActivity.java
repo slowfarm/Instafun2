@@ -86,16 +86,14 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String json = "";
-                String userPhoto = "";
                 try {
                     json = new UserDataTask(username, maxId).execute().get();
-                    userPhoto = new UserPhotoTask(username, token).execute().get();
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
                 if(json != null) {
                     try {
-                        userData = new Parser().userDataParser(json, username, userPhoto);
+                        userData = new Parser().userDataParser(json, username);
                         comments = userData.comments;
                         intent = new Intent(StartActivity.this, UserWallActivity.class);
                         bundle.putParcelable("userData", userData);
