@@ -11,22 +11,25 @@ public class UserData implements Parcelable {
     public ArrayList<String> photoStandardResolution;
     public String maxId;
     public String username;
+    public String userPhoto;
 
     public ArrayList<Comments> comments = new ArrayList<>();
 
-    public UserData(String username, ArrayList<String> photoLowResolution, ArrayList<String> photoStandardResolution,String maxId, ArrayList<Comments> comments) {
+    public UserData(String userPhoto,String username, ArrayList<String> photoLowResolution, ArrayList<String> photoStandardResolution,String maxId, ArrayList<Comments> comments) {
         this.username = username;
         this.photoLowResolution = photoLowResolution;
         this.photoStandardResolution = photoStandardResolution;
         this.maxId = maxId;
         this.comments = comments;
+        this.userPhoto = userPhoto;
     }
 
-    protected UserData(Parcel in) {
+    private UserData(Parcel in) {
         photoLowResolution = in.createStringArrayList();
         photoStandardResolution = in.createStringArrayList();
         maxId = in.readString();
         username = in.readString();
+        userPhoto = in.readString();
         comments = in.createTypedArrayList(Comments.CREATOR);
     }
 
@@ -48,6 +51,7 @@ public class UserData implements Parcelable {
         this.photoStandardResolution.addAll(userdata.photoStandardResolution);
         this.comments.addAll(userdata.comments);
         this.maxId = userdata.maxId;
+        this.userPhoto = userdata.userPhoto;
     }
 
     @Override
@@ -61,6 +65,7 @@ public class UserData implements Parcelable {
         parcel.writeStringList(photoStandardResolution);
         parcel.writeString(maxId);
         parcel.writeString(username);
+        parcel.writeString(userPhoto);
         parcel.writeTypedList(comments);
     }
 }

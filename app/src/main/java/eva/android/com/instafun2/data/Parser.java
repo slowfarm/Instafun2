@@ -10,7 +10,7 @@ import eva.android.com.instafun2.data.Comments;
 import eva.android.com.instafun2.data.UserData;
 
 public class Parser {
-    public UserData userDataParser(String strJson, String username) throws JSONException {
+    public UserData userDataParser(String strJson, String username, String userPhoto) throws JSONException {
 
         UserData userData;
         ArrayList<Comments> comments = new ArrayList<>();
@@ -42,7 +42,7 @@ public class Parser {
             }
             comments.add(new Comments(name, text));
         }
-        userData = new UserData(username,photoLowResolution, photoStandartResolution, maxId, comments);
+        userData = new UserData(userPhoto,username,photoLowResolution, photoStandartResolution, maxId, comments);
         return userData;
     }
     public ArrayList<Users> usersParser(String strJson) throws JSONException {
