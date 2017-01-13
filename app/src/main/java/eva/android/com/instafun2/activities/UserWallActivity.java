@@ -56,7 +56,7 @@ public class UserWallActivity extends AppCompatActivity implements SwipyRefreshL
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
         try {
             json = new UserDataTask(userData.username, userData.maxId).execute().get();
-            userData.add(new Parser().userDataParser(json, userData.username));
+            userData.add(new Parser().userDataParser(json));
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "Конец списка", Toast.LENGTH_SHORT).show();

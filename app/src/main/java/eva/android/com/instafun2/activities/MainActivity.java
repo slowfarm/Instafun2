@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
+
 import eva.android.com.instafun2.R;
+import eva.android.com.instafun2.dataSources.ParseTask;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,11 +32,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWebView = (WebView)findViewById(R.id.web_view);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(url);
+//        mWebView = (WebView)findViewById(R.id.web_view);
+//        mWebView.getSettings().setJavaScriptEnabled(true);
+//        mWebView.getSettings().setDomStorageEnabled(true);
+//        mWebView.setWebViewClient(new MyWebViewClient());
+//        mWebView.loadUrl(url);
+        String url = "";
+        try {
+            url = new ParseTask().execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        System.out.println(url);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("url", url);
+//        Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//        finish();
 
     }
 

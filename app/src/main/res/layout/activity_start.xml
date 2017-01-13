@@ -26,8 +26,6 @@
         android:id="@+id/button"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal" />
-    <com.yayandroid.parallaxrecyclerview.ParallaxRecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
+    <include layout="@layout/fragment_start" />
 </LinearLayout>

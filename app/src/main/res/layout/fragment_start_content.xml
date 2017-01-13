@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<eva.android.com.instafun2.parallax.ParallaxRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:parallax="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parallax"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    parallax:parallax_background="@drawable/parallax_background">
+
+</eva.android.com.instafun2.parallax.ParallaxRelativeLayout>
