@@ -20,7 +20,7 @@ import eva.android.com.instafun2.data.UserData;
 import eva.android.com.instafun2.parallax.ParallaxFragment;
 import eva.android.com.instafun2.parallax.ParallaxRelativeLayout;
 
-import static eva.android.com.instafun2.activities.StartActivity.helper;
+import static eva.android.com.instafun2.activities.MainActivity.helper;
 
 public class StartFragment extends ParallaxFragment {
 

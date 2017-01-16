@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 
 public class UserData implements Parcelable {
-    public ArrayList<String> photoLowResolution;
     public ArrayList<String> photoStandardResolution;
     public String maxId;
     public String username;
@@ -15,9 +14,8 @@ public class UserData implements Parcelable {
 
     public ArrayList<Comments> comments = new ArrayList<>();
 
-    public UserData(String userPhoto,String username, ArrayList<String> photoLowResolution, ArrayList<String> photoStandardResolution,String maxId, ArrayList<Comments> comments) {
+    public UserData(String userPhoto,String username, ArrayList<String> photoStandardResolution,String maxId, ArrayList<Comments> comments) {
         this.username = username;
-        this.photoLowResolution = photoLowResolution;
         this.photoStandardResolution = photoStandardResolution;
         this.maxId = maxId;
         this.comments = comments;
@@ -25,7 +23,6 @@ public class UserData implements Parcelable {
     }
 
     private UserData(Parcel in) {
-        photoLowResolution = in.createStringArrayList();
         photoStandardResolution = in.createStringArrayList();
         maxId = in.readString();
         username = in.readString();
@@ -47,7 +44,6 @@ public class UserData implements Parcelable {
 
     public void add(UserData userdata) {
         this.username = userdata.username;
-        this.photoLowResolution.addAll(userdata.photoLowResolution);
         this.photoStandardResolution.addAll(userdata.photoStandardResolution);
         this.comments.addAll(userdata.comments);
         this.maxId = userdata.maxId;
@@ -61,7 +57,6 @@ public class UserData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeStringList(photoLowResolution);
         parcel.writeStringList(photoStandardResolution);
         parcel.writeString(maxId);
         parcel.writeString(username);
