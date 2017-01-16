@@ -5,31 +5,31 @@ public final class ParallaxPlaneFactory {
     /**
      * most background plane parameters
      */
-    private static final float MOTION_SPEED_MOST_BACKGROUND = 1.4f;
+    private static final float MOTION_SPEED_MOST_BACKGROUND = 7.0f;
     private static final int MOTION_DIRECTION_MOST_BACKGROUND = 1;
 
     /**
      * background plane parameters
      */
-    private static final float MOTION_SPEED_BACKGROUND = 2.0f;
+    private static final float MOTION_SPEED_BACKGROUND = 10.0f;
     private static final int MOTION_DIRECTION_BACKGROUND = 1;
 
     /**
      * middle plane parameters
      */
-    private static final float MOTION_SPEED_MIDDLE = 4.0f;
+    private static final float MOTION_SPEED_MIDDLE = 20.0f;
     private static final int MOTION_DIRECTION_MIDDLE = -1;
 
     /**
      * foreground plane parameters
      */
-    private static final float MOTION_SPEED_FOREGROUND = 2.0f;
+    private static final float MOTION_SPEED_FOREGROUND = 10.0f;
     private static final int MOTION_DIRECTION_FOREGROUND = -1;
 
     /**
      * most foreground plane parameters
      */
-    private static final float MOTION_SPEED_MOST_FOREGROUND = 1.6f;
+    private static final float MOTION_SPEED_MOST_FOREGROUND = 8.0f;
     private static final int MOTION_DIRECTION_MOST_FOREGROUND = -1;
 
     /**

@@ -26,30 +26,24 @@ public class SplashActivity extends AppCompatActivity {
             +redirectUri+"&scope=basic+public_content&response_type=token";
     String login = "kypopthblu_poma";
     String password = "suzumo15";
-
     final String javaScript = "javascript: {" +
             "document.getElementById('id_username').value = '"+login +"';" +
             "document.getElementById('id_password').value = '"+password+"';" +
             "document.getElementsByClassName('button-green')[0].click();};";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         snackbar = Snackbar.make(findViewById(R.id.coordinator_layout),
-          "Нет соединения", Snackbar.LENGTH_INDEFINITE);
+           "Нет соединения", Snackbar.LENGTH_INDEFINITE);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-        mWebView = new WebView(this);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.setWebViewClient(new MyWebViewClient());
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while (!isNetworkConnected()){
                     snackbar.show();
-                    progressBar.setVisibility(View.VISIBLE);
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -59,6 +53,10 @@ public class SplashActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mWebView = new WebView(SplashActivity.this);
+                        mWebView.getSettings().setJavaScriptEnabled(true);
+                        mWebView.getSettings().setDomStorageEnabled(true);
+                        mWebView.setWebViewClient(new MyWebViewClient());
                         mWebView.loadUrl(url);
                     }
                 });
@@ -71,18 +69,23 @@ public class SplashActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url)
         {
             if (url.contains("access_token=")) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class)
-                        .putExtra("url", url));
+                Bundle bundle = new Bundle();
+                bundle.putString("url", url);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class)
+                        .putExtra("url", url);
+                startActivity(intent);
                 finish();
+                return true;
             } else {
                 view.loadUrl(url);
+                return true;
             }
-            return true;
         }
         @Override
         public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(mWebView, url);
-            mWebView.postDelayed(new Runnable() {
+            super.onPageFinished(view, url);
+            if(url.contains("force_classic_login="))
+                view.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mWebView.loadUrl(javaScript);

@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     String token = "";
 
     UserData userData;
-    ArrayList<Comments> comments = new ArrayList<>();
     ArrayList<UserData> searchUsers = new ArrayList<>();
     String maxId = "";
     String username;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         helper = Database.getInstance(this);
+        searchUsers = helper.getUserData();
 
         button = (Button)findViewById(R.id.button);
         intent = this.getIntent();
@@ -77,18 +77,17 @@ public class MainActivity extends AppCompatActivity {
                     json = new UserDataTask(username, maxId).execute().get();
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
+                    Toast.makeText(MainActivity.this, e.toString(),Toast.LENGTH_SHORT);
                 }
                 if(json != null) {
                     try {
                         userData = new Parser().userDataParser(json);
-                        comments = userData.comments;
                         intent = new Intent(MainActivity.this, UserWallActivity.class);
                         bundle.putParcelable("userData", userData);
-                        bundle.putParcelableArrayList("comments", comments);
+                        bundle.putParcelableArrayList("comments", userData.comments);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        if(equalizer(searchUsers, userData))
-                            helper.setUserData(json);
+                        if(equalizer(searchUsers, userData)) helper.setUserData(json);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(MainActivity.this,
@@ -105,15 +104,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean equalizer(ArrayList<UserData> data1, UserData data2) {
         boolean flag = true;
         for(int i=0; i< data1.size(); i++)
-            if(data1.get(i).username.equals(data2.username)) {
+            if (data1.get(i).username.equals(data2.username)) {
                 flag = false;
                 break;
-            }
+        }
         return flag;
     }
 
     @Override
     protected void onResume() {
+        searchUsers = helper.getUserData();
         fragment = new StartFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment_container,
                 fragment).commit();

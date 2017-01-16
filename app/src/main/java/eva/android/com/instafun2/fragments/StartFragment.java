@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import eva.android.com.instafun2.R;
@@ -24,31 +25,34 @@ import static eva.android.com.instafun2.activities.MainActivity.helper;
 
 public class StartFragment extends ParallaxFragment {
 
-    ArrayList<UserData> mData = new ArrayList<>();
     Context context;
-    View v;
-    ParallaxRelativeLayout relativeLayout;
     private Bundle bundle = new Bundle();
     private Intent intent;
 
+    ArrayList<UserData> mData = new ArrayList<>();
+
     public StartFragment() {
+        mData.clear();
         mData.addAll(helper.getUserData());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_start_content, container, false);
+        View v = inflater.inflate(R.layout.fragment_start_content, container, false);
 
         context = v.getContext().getApplicationContext();
-        relativeLayout = (ParallaxRelativeLayout) v.findViewById(R.id.parallax);
-        addAllViews();
-
+        ParallaxRelativeLayout relativeLayout = (ParallaxRelativeLayout) v.findViewById(R.id.parallax);
+        for(ImageView view: addAllViews()) {
+            relativeLayout.addView(view);
+        }
         setParallaxRelativeLayout((ParallaxRelativeLayout) v.findViewById(R.id.parallax));
         return v;
     }
 
-    public void addAllViews() {
+    public ArrayList<ImageView> addAllViews() {
+
         ArrayList<ImageView> imageView = new ArrayList<>();
+
         for(int i=0; i<mData.size(); i++) {
             int top = new Random().nextInt(1200);
             int left = new Random().nextInt(600);
@@ -79,7 +83,7 @@ public class StartFragment extends ParallaxFragment {
                     startActivity(intent);
                 }
             });
-            relativeLayout.addView(imageView.get(i));
         }
+        return imageView;
     }
 }
