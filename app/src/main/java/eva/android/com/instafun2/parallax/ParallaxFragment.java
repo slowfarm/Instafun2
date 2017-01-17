@@ -28,7 +28,7 @@ public class ParallaxFragment extends Fragment {
      *
      * @param parallaxRelativeLayout
      */
-    protected void setParallaxRelativeLayout(ParallaxRelativeLayout parallaxRelativeLayout) {
+    public void setParallaxRelativeLayout(ParallaxRelativeLayout parallaxRelativeLayout) {
         mParallaxRelativeLayout = parallaxRelativeLayout;
     }
 
@@ -52,7 +52,6 @@ public class ParallaxFragment extends Fragment {
                     mRotationSensor,
                     SensorManager.SENSOR_DELAY_NORMAL);
         }
-
     }
 
     @Override

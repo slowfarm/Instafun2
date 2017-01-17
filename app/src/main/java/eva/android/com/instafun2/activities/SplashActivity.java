@@ -6,14 +6,16 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import eva.android.com.instafun2.R;
+import eva.android.com.instafun2.data.Database;
 
 public class SplashActivity extends AppCompatActivity {
+
+    public static Database helper;
 
     WebView mWebView;
     Snackbar snackbar;
@@ -35,8 +37,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        snackbar = Snackbar.make(findViewById(R.id.coordinator_layout),
-           "Нет соединения", Snackbar.LENGTH_INDEFINITE);
+
+        helper = Database.getInstance(this);
+
+        snackbar = Snackbar.make(findViewById(R.id.coordinator_layout), "Нет соединения",
+                Snackbar.LENGTH_INDEFINITE);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         new Thread(new Runnable() {

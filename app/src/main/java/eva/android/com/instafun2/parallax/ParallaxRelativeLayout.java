@@ -2,24 +2,37 @@ package eva.android.com.instafun2.parallax;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-import java.util.HashMap;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import eva.android.com.instafun2.R;
+import eva.android.com.instafun2.activities.UserWallActivity;
+import eva.android.com.instafun2.data.UserData;
 
 public class ParallaxRelativeLayout extends RelativeLayout implements SensorEventListener {
 
@@ -103,6 +116,16 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
      */
     private float[] mLastTranslation;
 
+    private Intent intent;
+
+    private Bundle bundle;
+
+    private Context mContext;
+
+    private DisplayMetrics metrics;
+
+    private static final String[] mColors = new String[]{"#f9ad8c", "#d6576a", "#e7d2d6", "#e7d2ca",
+            "#aa5b5e", "#f9ad8c", "#e7d2b0"};
 
     /**
      * Constructor
@@ -137,7 +160,7 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
                 .getDefaultDisplay().getRotation();
         remapAxis(rotation);
 
-        mChildrenToAnimate = new HashMap<View, Integer>();
+        mChildrenToAnimate = new HashMap<>();
 
         mLastAcceleration = new float[]{0.0f, 0.0f};
 
@@ -149,6 +172,14 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
                 new FloatArrayEvaluator(2), 0);
 
         mParallaxAnimator.setDuration(ANIMATION_DURATION_IN_MILLI);
+
+        intent = new Intent(context, UserWallActivity.class);
+
+        bundle = new Bundle();
+
+        mContext = context;
+
+        metrics = getResources().getDisplayMetrics();
     }
 
     public Bitmap drawableToBitmap(Drawable drawable) {
@@ -349,5 +380,97 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    public void addAllViews(final ArrayList<UserData> mData) {
+
+        addRandomViews();
+
+        for (int i = 0; i < mData.size(); i++) {
+            final int finalI = i;
+
+            int scale = new Random().nextInt(100) + 300;
+            int top = new Random().nextInt(metrics.heightPixels - scale);
+            int left = new Random().nextInt(metrics.widthPixels - scale);
+            int tag = new Random().nextInt(4) + 1;
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                    scale, scale);
+            layoutParams.setMargins(left, top, 0, 0);
+            CircleImageView imageView = new CircleImageView(mContext);
+
+            Picasso.with(mContext)
+                    .load(mData.get(i).userPhoto)
+                    .placeholder(R.drawable.ic_photo)
+                    .error(R.drawable.ic_error)
+                    .into(imageView);
+
+            imageView.setLayoutParams(layoutParams);
+            imageView.setTag(tag);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    bundle.putParcelable("userData", mData.get(finalI));
+                    bundle.putParcelableArrayList("comments", mData.get(finalI).comments);
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+            });
+            this.addView(imageView);
+        }
+    }
+
+    private void addRandomViews() {
+
+        for (String mColor : mColors) {
+            int scale = new Random().nextInt(100) + 200;
+            int top = new Random().nextInt(metrics.heightPixels - scale);
+            int left = new Random().nextInt(metrics.widthPixels - scale);
+            int tag = new Random().nextInt(4) + 1;
+            System.out.println(scale+"      "+metrics.heightPixels);
+            LayoutParams layoutParams = new LayoutParams(
+                    scale, scale);
+            layoutParams.setMargins(left, top, 0, 0);
+            CircleImageView imageView = new CircleImageView(mContext);
+            GradientDrawable shape = new GradientDrawable();
+            shape.setShape(GradientDrawable.OVAL);
+            shape.setColor(Color.parseColor(mColor));
+            shape.setAlpha(255*70/100);
+
+            imageView.setBackgroundDrawable(shape);
+            imageView.setLayoutParams(layoutParams);
+            imageView.setTag(tag);
+            this.addView(imageView);
+        }
+    }
+
+    public void addView(final UserData mData) {
+
+        int scale = new Random().nextInt(100) + 300;
+        int top = new Random().nextInt(metrics.heightPixels - scale -200);
+        int left = new Random().nextInt(metrics.widthPixels - scale - 200);
+        int tag = new Random().nextInt(4) + 1;
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                scale, scale);
+        layoutParams.setMargins(left, top, 0, 0);
+        CircleImageView imageView = new CircleImageView(mContext);
+
+        Picasso.with(mContext)
+                .load(mData.userPhoto)
+                .placeholder(R.drawable.ic_photo)
+                .error(R.drawable.ic_error)
+                .into(imageView);
+
+        imageView.setLayoutParams(layoutParams);
+        imageView.setTag(tag);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle.putParcelable("userData", mData);
+                bundle.putParcelableArrayList("comments", mData.comments);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
+        this.addView(imageView);
     }
 }

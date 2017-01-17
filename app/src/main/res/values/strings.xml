@@ -4,4 +4,8 @@
     <string name="button">Начать</string>
     <string name="title_user_wall">Стена</string>
     <string name="title_activity_comments">Комменты</string>
+    <string name="login">kypopthblu_poma</string>
+    <string name="password">suzumo15</string>
+    <string name="client_id">32d863705668431e9547d9ff01963904</string>
+    <string name="redirect_uri">http://slowfarm.github.io</string>
 </resources>
