@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".activities.SplashActivity"
-            android:theme="@style/AppTheme"
+            android:theme="@style/SplashTheme"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait">

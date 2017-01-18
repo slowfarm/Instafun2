@@ -1,23 +1,30 @@
 package eva.android.com.instafun2.dataSources;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
+
+import eva.android.com.instafun2.activities.MainActivity;
 
 
-public class UserDataTask extends AsyncTask<Void, Void, String> {
+public class UserDataTask extends AsyncTask<Void, String, String>{
 
-    private String resultJson;
     private String username;
     private String maxId;
+    private Context context;
 
-    public UserDataTask(String username, String maxId) {
+    public UserDataTask(String username, String maxId, Context context) {
         this.username = username;
         this.maxId = maxId;
+        this.context = context;
     }
     @Override
     protected String doInBackground(Void... params) {
@@ -34,15 +41,22 @@ public class UserDataTask extends AsyncTask<Void, Void, String> {
             while ((line = reader.readLine()) != null) {
                 buffer.append(line);
             }
-            resultJson = buffer.toString();
+            return buffer.toString();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return "uhex";
+        } catch (FileNotFoundException  e) {
+            e.printStackTrace();
+            return "fnfex";
         } catch (Exception e) {
             e.printStackTrace();
+            return e.toString();
         }
-        return resultJson;
     }
 
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
     }
+
 }

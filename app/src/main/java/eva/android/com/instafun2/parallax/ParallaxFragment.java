@@ -33,11 +33,11 @@ public class ParallaxFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Activity activity = (Activity) context;
         //get sensor manager
         mSensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
-
         //get rotation sensor
         mRotationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }

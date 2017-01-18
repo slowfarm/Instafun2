@@ -426,7 +426,7 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
             int top = new Random().nextInt(metrics.heightPixels - scale);
             int left = new Random().nextInt(metrics.widthPixels - scale);
             int tag = new Random().nextInt(4) + 1;
-            System.out.println(scale+"      "+metrics.heightPixels);
+
             LayoutParams layoutParams = new LayoutParams(
                     scale, scale);
             layoutParams.setMargins(left, top, 0, 0);

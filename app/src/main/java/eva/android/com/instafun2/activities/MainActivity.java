@@ -1,8 +1,8 @@
 package eva.android.com.instafun2.activities;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,12 +12,14 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 
+import java.io.FileNotFoundException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import eva.android.com.instafun2.Transporter;
 import eva.android.com.instafun2.R;
 import eva.android.com.instafun2.adapters.AutocompleteAdapter;
+import eva.android.com.instafun2.data.FragmentCommunicator;
 import eva.android.com.instafun2.data.Parser;
 import eva.android.com.instafun2.data.UserData;
 import eva.android.com.instafun2.dataSources.UserDataTask;
@@ -37,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     String maxId = "";
     String username;
     String token = "";
-    public static MainFragment fragment;
+    MainFragment fragment;
+    public FragmentCommunicator fragmentCommunicator;
 
     Bundle bundle = new Bundle();
     Intent intent;
-    private Transporter listener ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
         button = (Button)findViewById(R.id.button);
         intent = this.getIntent();
-        String url = intent.getStringExtra("url");
-        token = url.split("=")[1];
+        token = intent.getStringExtra("url").split("=")[1];
 
-        fragment = MainFragment.getInstance();
-        getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container,
-                fragment).commit();
-        setListener(fragment);
+        fragment = MainFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, fragment).commit();
+        passVal(fragment);
+        fragmentCommunicator.passDataToFragment(searchUsers);
 
         searchTextView = (AutoCompleteTextView) findViewById(R.id.search);
         adapter = new AutocompleteAdapter(this,android.R.layout.simple_dropdown_item_1line, token);
@@ -82,19 +83,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onResume() {
-        searchUsers = helper.getUserData();
         super.onResume();
+        searchUsers = helper.getUserData();
+        fragment = MainFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, fragment).commit();
+        passVal(fragment);
+        fragmentCommunicator.passDataToFragment(searchUsers);
+    }
+
+    public void passVal(FragmentCommunicator fragmentCommunicator) {
+        this.fragmentCommunicator = fragmentCommunicator;
     }
 
     public void startUserWallActivity() {
         username = searchTextView.getText().toString();
         String json = "";
         try {
-            json = new UserDataTask(username, maxId).execute().get();
+            json = new UserDataTask(username, maxId, this).execute().get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            Toast.makeText(MainActivity.this, e.toString(),Toast.LENGTH_SHORT);
         }
         if(json != null) {
             try {
@@ -106,17 +119,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 if(equalizer(searchUsers, userData)) {
                     helper.setUserData(json);
-                    listener.addView(userData);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(MainActivity.this,
-                        "Отсутствует доступ к странице пользователя",
-                        Toast.LENGTH_SHORT).show();
+                switch(json) {
+                    case "uhex":
+                        Toast.makeText(MainActivity.this, "no connection", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "fnfex":
+                        Toast.makeText(MainActivity.this, "no such user", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(MainActivity.this, "access denied", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         }
-        else Toast.makeText(MainActivity.this,"Ползователь с таким именем отсутствует",
-                Toast.LENGTH_SHORT).show();
     }
 
     public boolean equalizer(ArrayList<UserData> data1, UserData data2) {
@@ -127,10 +145,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         return flag;
-    }
-
-    public void setListener(Transporter listener)
-    {
-        this.listener = listener ;
     }
 }

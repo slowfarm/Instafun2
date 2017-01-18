@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
 
         helper = Database.getInstance(this);
 
-        snackbar = Snackbar.make(findViewById(R.id.coordinator_layout), "Нет соединения",
+        snackbar = Snackbar.make(findViewById(R.id.coordinator_layout), "No connection",
                 Snackbar.LENGTH_INDEFINITE);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -50,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
                 while (!isNetworkConnected()){
                     snackbar.show();
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
