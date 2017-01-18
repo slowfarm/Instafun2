@@ -8,31 +8,23 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import eva.android.com.instafun2.R;
-import eva.android.com.instafun2.data.FragmentCommunicator;
 import eva.android.com.instafun2.data.UserData;
 import eva.android.com.instafun2.parallax.ParallaxFragment;
 import eva.android.com.instafun2.parallax.ParallaxRelativeLayout;
 
-public class MainFragment extends ParallaxFragment implements FragmentCommunicator {
+import static eva.android.com.instafun2.activities.SplashActivity.helper;
+
+public class MainParallaxFragment extends ParallaxFragment {
 
     ArrayList<UserData> mData = new ArrayList<>();
-    static ParallaxRelativeLayout relativeLayout;
-
-    public static MainFragment newInstance(){
-        return new MainFragment();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main_content, container, false);
-        relativeLayout = (ParallaxRelativeLayout) v.findViewById(R.id.parallax);
+        mData = helper.getUserData();
+        ParallaxRelativeLayout relativeLayout = (ParallaxRelativeLayout) v.findViewById(R.id.parallax);
         relativeLayout.addAllViews(mData);
         setParallaxRelativeLayout(relativeLayout);
         return v;
-    }
-
-    @Override
-    public void passDataToFragment(ArrayList<UserData> data) {
-        mData = data;
     }
 }

@@ -1,8 +1,6 @@
 package eva.android.com.instafun2.dataSources;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,19 +10,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
 
-import eva.android.com.instafun2.activities.MainActivity;
-
 
 public class UserDataTask extends AsyncTask<Void, String, String>{
 
     private String username;
     private String maxId;
-    private Context context;
 
-    public UserDataTask(String username, String maxId, Context context) {
+    public UserDataTask(String username, String maxId) {
         this.username = username;
         this.maxId = maxId;
-        this.context = context;
     }
     @Override
     protected String doInBackground(Void... params) {
@@ -44,10 +38,10 @@ public class UserDataTask extends AsyncTask<Void, String, String>{
             return buffer.toString();
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            return "uhex";
+            return "UnknownHostException";
         } catch (FileNotFoundException  e) {
             e.printStackTrace();
-            return "fnfex";
+            return "FileNotFoundException";
         } catch (Exception e) {
             e.printStackTrace();
             return e.toString();

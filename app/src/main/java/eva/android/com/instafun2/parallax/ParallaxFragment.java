@@ -28,7 +28,7 @@ public class ParallaxFragment extends Fragment {
      *
      * @param parallaxRelativeLayout
      */
-    public void setParallaxRelativeLayout(ParallaxRelativeLayout parallaxRelativeLayout) {
+    protected void setParallaxRelativeLayout(ParallaxRelativeLayout parallaxRelativeLayout) {
         mParallaxRelativeLayout = parallaxRelativeLayout;
     }
 

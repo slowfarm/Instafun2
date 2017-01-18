@@ -6,9 +6,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import eva.android.com.instafun2.data.Comments;
-import eva.android.com.instafun2.data.UserData;
-
 public class Parser {
     public UserData userDataParser(String strJson) throws JSONException {
 

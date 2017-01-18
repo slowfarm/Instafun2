@@ -17,7 +17,7 @@ public class Database extends SQLiteOpenHelper implements BaseColumns {
     private SQLiteDatabase mSqLiteDatabase;
     private static Database instance;
 
-    public static final String DATA_COLUMN = "dataColumn";
+    private static final String DATA_COLUMN = "dataColumn";
 
     private static final String DATABASE_NAME = "vapedatabase.db";
     private static final int DATABASE_VERSION = 1;

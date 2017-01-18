@@ -2,7 +2,7 @@ package eva.android.com.instafun2.parallax;
 
 import android.animation.TypeEvaluator;
 
-public class FloatArrayEvaluator implements TypeEvaluator<float[]> {
+class FloatArrayEvaluator implements TypeEvaluator<float[]> {
 
     /**
      * size of float array
@@ -14,7 +14,7 @@ public class FloatArrayEvaluator implements TypeEvaluator<float[]> {
      *
      * @param arraySize size of array which is going to be animated
      */
-    public FloatArrayEvaluator(int arraySize) {
+    FloatArrayEvaluator(int arraySize) {
         super();
         mArraySize = arraySize;
     }

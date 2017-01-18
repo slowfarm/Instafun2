@@ -23,6 +23,7 @@ public class ParallaxBackground extends View {
 
         mParallaxBackground = parallaxBackground;
         mParallaxDim = new Rect(0, 0, 0, 0);
+        System.out.println("ParallaxBackground");
     }
 
     @Override
@@ -36,6 +37,7 @@ public class ParallaxBackground extends View {
                 new Rect(0, 0, this.getRight() + this.getWidth() / 2,
                         this.getBottom() + this.getHeight() / 2), null
         );
+        System.out.println("OnDraw");
     }
 
 
@@ -43,6 +45,7 @@ public class ParallaxBackground extends View {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         determineWellFormedRect();
+        System.out.println("onLayout");
     }
 
     /**

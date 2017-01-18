@@ -1,6 +1,6 @@
 package eva.android.com.instafun2.parallax;
 
-public final class ParallaxPlaneFactory {
+final class ParallaxPlaneFactory {
 
     /**
      * most background plane parameters

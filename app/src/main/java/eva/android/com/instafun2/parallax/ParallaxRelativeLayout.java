@@ -7,7 +7,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -44,7 +43,7 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
     /**
      * boundary minimum to avoid noise
      */
-    private static final float TRANSLATION_NOISE = 0.15f;
+    private static final float TRANSLATION_NOISE = 0.6f;
 
     /**
      * boundary maximum, over it phone rotates
@@ -182,7 +181,7 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
         metrics = getResources().getDisplayMetrics();
     }
 
-    public Bitmap drawableToBitmap(Drawable drawable) {
+    private Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
         }

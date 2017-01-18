@@ -14,17 +14,17 @@
         android:focusable="true">
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="16dp"
-            android:hint="Let's start!">
+            android:layout_marginStart="16dp"
+            android:hint="@string/button"
+            android:layout_marginLeft="16dp">
 
             <AutoCompleteTextView
                 android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:textColor="@android:color/white" />
         </android.support.design.widget.TextInputLayout>
 
@@ -34,6 +34,7 @@
             android:id="@+id/button"
             android:layout_gravity="center_vertical|center_horizontal"
             android:background="@drawable/ic_search"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp" />
 
     </LinearLayout>

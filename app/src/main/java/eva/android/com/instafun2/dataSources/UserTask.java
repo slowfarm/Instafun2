@@ -15,7 +15,7 @@ import eva.android.com.instafun2.data.Users;
 
 public class UserTask extends AsyncTask<Void, Void, ArrayList<Users>> {
 
-    ArrayList<Users> users = new ArrayList<>();
+    private ArrayList<Users> users = new ArrayList<>();
     private CharSequence query;
     private String token;
 

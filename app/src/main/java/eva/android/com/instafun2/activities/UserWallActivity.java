@@ -55,7 +55,7 @@ public class UserWallActivity extends AppCompatActivity implements SwipyRefreshL
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
         try {
-            json = new UserDataTask(userData.username, userData.maxId, this).execute().get();
+            json = new UserDataTask(userData.username, userData.maxId).execute().get();
             userData.add(new Parser().userDataParser(json));
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();

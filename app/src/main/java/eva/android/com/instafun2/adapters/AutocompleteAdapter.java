@@ -40,7 +40,8 @@ public class AutocompleteAdapter extends ArrayAdapter implements Filterable {
     @NonNull
     @Override
     public Filter getFilter() {
-        Filter myFilter = new Filter() {
+
+        return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
@@ -67,8 +68,6 @@ public class AutocompleteAdapter extends ArrayAdapter implements Filterable {
                 }
             }
         };
-
-        return myFilter;
     }
 
     @NonNull

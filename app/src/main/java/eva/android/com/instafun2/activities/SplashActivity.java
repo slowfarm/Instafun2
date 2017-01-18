@@ -47,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (!isNetworkConnected()){
+                while (isNetworkDisconnected()){
                     snackbar.show();
                     try {
                         Thread.sleep(1000);
@@ -99,8 +99,8 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isNetworkConnected() {
+    private boolean isNetworkDisconnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
+        return cm.getActiveNetworkInfo() == null;
     }
 }
