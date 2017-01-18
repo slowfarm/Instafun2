@@ -12,16 +12,16 @@ public class ParallaxPlane {
      * @param radius
      * @param direction
      */
-    public ParallaxPlane(float radius, int direction) {
+    ParallaxPlane(float radius, int direction) {
         mTranslationRatio = radius;
         mTranslationDirection = direction;
     }
 
-    public float getTranslationRatio() {
+    float getTranslationRatio() {
         return mTranslationRatio;
     }
 
-    public int getTranslationDirection() {
+    int getTranslationDirection() {
         return mTranslationDirection;
     }
 }

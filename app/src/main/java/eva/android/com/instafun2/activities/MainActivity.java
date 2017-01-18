@@ -26,18 +26,13 @@ import static eva.android.com.instafun2.activities.SplashActivity.helper;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button;
-    AutoCompleteTextView searchTextView;
-    AutocompleteAdapter adapter;
+    private AutoCompleteTextView searchTextView;
+    private AutocompleteAdapter adapter;
 
-    UserData userData;
-    ArrayList<UserData> searchUsers = new ArrayList<>();
-    String maxId = "";
-    String username;
-    String token = "";
+    private ArrayList<UserData> searchUsers = new ArrayList<>();// list of found users
 
-    Bundle bundle = new Bundle();
-    Intent intent;
+    private Bundle bundle = new Bundle();
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
         searchUsers = helper.getUserData();
 
-        button = (Button)findViewById(R.id.button);
+        Button button = (Button) findViewById(R.id.button);
         intent = this.getIntent();
-        token = intent.getStringExtra("url").split("=")[1];
+        String token = intent.getStringExtra("url").split(getString(R.string.equal))[1];
 
         MainParallaxFragment fragment = new MainParallaxFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, fragment)
@@ -85,41 +80,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startUserWallActivity() {
-        username = searchTextView.getText().toString();
+        String username = searchTextView.getText().toString();
         String json = "";
         try {
+            String maxId = "";
             json = new UserDataTask(username, maxId).execute().get();
+            UserData userData = new Parser().userDataParser(json);
+            intent = new Intent(MainActivity.this, UserWallActivity.class);
+            bundle.putParcelable("userData", userData);
+            bundle.putParcelableArrayList("comments", userData.comments);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            if(equalizer(searchUsers, userData)) {
+                helper.setUserData(json);
+            }
+        } catch (JSONException e){
+            e.printStackTrace();
+            switch(json) {
+                case "UnknownHostException":
+                    Toast.makeText(MainActivity.this, "no connection", Toast.LENGTH_SHORT).show();
+                    break;
+                case "FileNotFoundException":
+                    Toast.makeText(MainActivity.this, "no such user", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Toast.makeText(MainActivity.this, "access denied", Toast.LENGTH_SHORT).show();
+                    break;
+            }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-        if(json != null) {
-            try {
-                userData = new Parser().userDataParser(json);
-                intent = new Intent(MainActivity.this, UserWallActivity.class);
-                bundle.putParcelable("userData", userData);
-                bundle.putParcelableArrayList("comments", userData.comments);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                if(equalizer(searchUsers, userData)) {
-                    helper.setUserData(json);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                switch(json) {
-                    case "UnknownHostException":
-                        Toast.makeText(MainActivity.this, "no connection", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "FileNotFoundException":
-                        Toast.makeText(MainActivity.this, "no such user", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        Toast.makeText(MainActivity.this, "access denied", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        }
     }
 
+    //compares two arrays
     private boolean equalizer(ArrayList<UserData> data1, UserData data2) {
         boolean flag = true;
         for(int i=0; i< data1.size(); i++)

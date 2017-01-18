@@ -11,8 +11,7 @@ import java.util.ArrayList;
 
 import eva.android.com.instafun2.data.Parser;
 import eva.android.com.instafun2.data.Users;
-
-
+// async task to retrieve the data for autocompleteTextView
 public class UserTask extends AsyncTask<Void, Void, ArrayList<Users>> {
 
     private ArrayList<Users> users = new ArrayList<>();

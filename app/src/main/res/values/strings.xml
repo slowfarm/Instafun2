@@ -5,4 +5,8 @@
     <string name="password">suzumo15</string>
     <string name="client_id">32d863705668431e9547d9ff01963904</string>
     <string name="redirect_uri">http://slowfarm.github.io</string>
+    <string name="javaScript">javascript: {document.getElementById(\'id_username\').value = \'kypopthblu_poma\';
+        document.getElementById(\'id_password\').value = \'suzumo15\';
+        document.getElementsByClassName(\'button-green\')[0].click();};</string>
+    <string name="equal">=</string>
 </resources>

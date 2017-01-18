@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
 
-
+//async task to retrieve data from the user's page
 public class UserDataTask extends AsyncTask<Void, String, String>{
 
     private String username;

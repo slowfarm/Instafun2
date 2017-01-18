@@ -25,12 +25,10 @@ import eva.android.com.instafun2.adapters.UserWallAdapter;
 
 public class UserWallActivity extends AppCompatActivity implements SwipyRefreshLayout.OnRefreshListener {
 
-    UserWallAdapter adapter;
-    RecyclerView recyclerView;
-    UserData userData;
-    ArrayList<Comments> comments = new ArrayList<>();
-    SwipyRefreshLayout mSwipeRefreshLayout;
-    String json = "";
+    private UserWallAdapter adapter;
+    private UserData userData;
+    private ArrayList<Comments> comments = new ArrayList<>();
+    private SwipyRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class UserWallActivity extends AppCompatActivity implements SwipyRefreshL
             comments = intent.getParcelableArrayListExtra("comments");
         }
         userData.comments = comments;
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new UserWallAdapter(this, userData);
         recyclerView.setAdapter(adapter);
@@ -55,11 +53,11 @@ public class UserWallActivity extends AppCompatActivity implements SwipyRefreshL
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
         try {
-            json = new UserDataTask(userData.username, userData.maxId).execute().get();
+            String json = new UserDataTask(userData.username, userData.maxId).execute().get();
             userData.add(new Parser().userDataParser(json));
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Конец списка", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "End of list", Toast.LENGTH_SHORT).show();
         }
         adapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);

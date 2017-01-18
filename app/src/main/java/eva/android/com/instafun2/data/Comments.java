@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Comments implements Parcelable {
     public ArrayList<String> name;
     public ArrayList<String> text;
-    public Comments(ArrayList<String> name, ArrayList<String> text) {
+    Comments(ArrayList<String> name, ArrayList<String> text) {
         this.name = name;
         this.text = text;
     }

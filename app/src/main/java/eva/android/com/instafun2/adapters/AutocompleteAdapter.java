@@ -18,23 +18,23 @@ import eva.android.com.instafun2.dataSources.UserTask;
 import eva.android.com.instafun2.data.Users;
 
 public class AutocompleteAdapter extends ArrayAdapter implements Filterable {
-    private ArrayList<Users> mCountry;
+    private ArrayList<Users> mUsers;
     private String mToken;
 
     public AutocompleteAdapter(Context context, int resource, String token) {
         super(context, resource);
-        mCountry = new ArrayList<>();
+        mUsers = new ArrayList<>();
         mToken = token;
     }
 
     @Override
     public int getCount() {
-        return mCountry.size();
+        return mUsers.size();
     }
 
     @Override
     public Users getItem(int position) {
-        return mCountry.get(position);
+        return mUsers.get(position);
     }
 
     @NonNull
@@ -49,12 +49,12 @@ public class AutocompleteAdapter extends ArrayAdapter implements Filterable {
                     try{
                         //get data from the web
                         String term = constraint.toString();
-                        mCountry = new UserTask(term, mToken).execute().get();
+                        mUsers = new UserTask(term, mToken).execute().get();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-                    filterResults.values = mCountry;
-                    filterResults.count = mCountry.size();
+                    filterResults.values = mUsers;
+                    filterResults.count = mUsers.size();
                 }
                 return filterResults;
             }
@@ -75,9 +75,9 @@ public class AutocompleteAdapter extends ArrayAdapter implements Filterable {
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.auto_complete_layout,parent,false);
-        Users country = mCountry.get(position);
-        TextView countryName = (TextView) view.findViewById(R.id.countryName);
-        countryName.setText(country.getName());
+        Users users = mUsers.get(position);
+        TextView username = (TextView) view.findViewById(R.id.username);
+        username.setText(users.getName());
         return view;
     }
 }

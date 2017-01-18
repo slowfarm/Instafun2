@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 
 public class UserData implements Parcelable {
+
     public ArrayList<String> photoStandardResolution;
     public String maxId;
     public String username;
@@ -14,7 +15,7 @@ public class UserData implements Parcelable {
 
     public ArrayList<Comments> comments = new ArrayList<>();
 
-    public UserData(String userPhoto,String username, ArrayList<String> photoStandardResolution,String maxId, ArrayList<Comments> comments) {
+    UserData(String userPhoto, String username, ArrayList<String> photoStandardResolution, String maxId, ArrayList<Comments> comments) {
         this.username = username;
         this.photoStandardResolution = photoStandardResolution;
         this.maxId = maxId;

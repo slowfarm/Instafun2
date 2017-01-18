@@ -1,6 +1,7 @@
 package eva.android.com.instafun2.data;
 
 public class Users {
+
     private String name;
 
     public String getName() {

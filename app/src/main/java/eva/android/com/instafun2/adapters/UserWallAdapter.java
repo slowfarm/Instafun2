@@ -31,7 +31,7 @@ public class UserWallAdapter extends RecyclerView.Adapter<UserWallAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.wall_list_item, viewGroup, false);
+                .inflate(R.layout.activity_user_wall_list_item, viewGroup, false);
         return new ViewHolder(v);
     }
 

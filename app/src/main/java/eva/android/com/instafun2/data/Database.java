@@ -19,7 +19,7 @@ public class Database extends SQLiteOpenHelper implements BaseColumns {
 
     private static final String DATA_COLUMN = "dataColumn";
 
-    private static final String DATABASE_NAME = "vapedatabase.db";
+    private static final String DATABASE_NAME = "instaDataBase.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_TABLE = "data";
@@ -79,7 +79,7 @@ public class Database extends SQLiteOpenHelper implements BaseColumns {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w("SQLite", "Обновляемся с версии " + oldVersion + " на версию " + newVersion);
+        Log.w("SQLite", "Update from version " + oldVersion + " to version " + newVersion);
         db.execSQL("DROP TABLE IF IT EXISTS " + DATABASE_TABLE);
         onCreate(db);
     }

@@ -13,6 +13,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -155,7 +156,7 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
         /**
          * Remap axis and axis' orientation according to the current device rotation
          */
-        final int rotation = ((WindowManager) context.getSystemService(context.WINDOW_SERVICE))
+        final int rotation = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay().getRotation();
         remapAxis(rotation);
 
@@ -434,8 +435,7 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
             shape.setShape(GradientDrawable.OVAL);
             shape.setColor(Color.parseColor(mColor));
             shape.setAlpha(255*70/100);
-
-            imageView.setBackgroundDrawable(shape);
+            imageView.setBackground(shape);
             imageView.setLayoutParams(layoutParams);
             imageView.setTag(tag);
             this.addView(imageView);
