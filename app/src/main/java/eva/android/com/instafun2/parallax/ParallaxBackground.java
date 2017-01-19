@@ -61,7 +61,8 @@ public class ParallaxBackground extends View {
              * Calculate the original Bitmap ratio in order to determine which dimension has to be
              * re calculated
              */
-            final float srcRatio = (float) mParallaxBackground.getWidth() / mParallaxBackground.getHeight();
+            final float srcRatio = (float) mParallaxBackground.getWidth() / mParallaxBackground
+                    .getHeight();
 
             /**
              * Initialize width and height with Bitmap value

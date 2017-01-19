@@ -15,10 +15,12 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="640px"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:id="@+id/list_image"
-            android:layout_gravity="bottom|center_horizontal"
-            android:scaleType="centerCrop" />
+            android:src="@drawable/ic_photo"
+            android:contentDescription="@string/image_list_item"/>
 
     </android.support.v7.widget.CardView>
 

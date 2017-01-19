@@ -15,7 +15,8 @@ public class UserData implements Parcelable {
 
     public ArrayList<Comments> comments = new ArrayList<>();
 
-    UserData(String userPhoto, String username, ArrayList<String> photoStandardResolution, String maxId, ArrayList<Comments> comments) {
+    UserData(String userPhoto, String username, ArrayList<String> photoStandardResolution,
+             String maxId, ArrayList<Comments> comments) {
         this.username = username;
         this.photoStandardResolution = photoStandardResolution;
         this.maxId = maxId;

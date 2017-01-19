@@ -13,7 +13,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -44,7 +43,7 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
     /**
      * boundary minimum to avoid noise
      */
-    private static final float TRANSLATION_NOISE = 0.6f;
+    private static final float TRANSLATION_NOISE = 0.20f;
 
     /**
      * boundary maximum, over it phone rotates
@@ -255,8 +254,10 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
      */
     public void setCurrentTranslationValues(float[] evaluatedValues) {
 
-        final float translateX = mRemappedViewOrientationX * this.getWidth() / DEFAULT_RADIUS_RATIO * evaluatedValues[mRemappedViewAxisX];
-        final float translateY = mRemappedViewOrientationY * this.getHeight() / DEFAULT_RADIUS_RATIO * evaluatedValues[mRemappedViewAxisY];
+        final float translateX = mRemappedViewOrientationX * this.getWidth() /
+                DEFAULT_RADIUS_RATIO * evaluatedValues[mRemappedViewAxisX];
+        final float translateY = mRemappedViewOrientationY * this.getHeight() /
+                DEFAULT_RADIUS_RATIO * evaluatedValues[mRemappedViewAxisY];
 
         //animate background
         mParallaxBackground.setTranslationX(translateX);
@@ -268,8 +269,10 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
             ParallaxPlane plane =
                     ParallaxPlaneFactory.createPlane(mChildrenToAnimate.get(parallaxItem));
 
-            parallaxItem.setTranslationX(translateX * plane.getTranslationDirection() / plane.getTranslationRatio());
-            parallaxItem.setTranslationY(translateY * plane.getTranslationDirection() / plane.getTranslationRatio());
+            parallaxItem.setTranslationX(translateX * plane.getTranslationDirection() /
+                    plane.getTranslationRatio());
+            parallaxItem.setTranslationY(translateY * plane.getTranslationDirection() /
+                    plane.getTranslationRatio());
         }
     }
 
@@ -313,16 +316,20 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
              * p = 1/2 * a * dT^2
              */
             if (Math.abs(accelerationX) > MAXIMUM_ACCELERATION) {
-                translation[mRemappedViewAxisX] = mLastAcceleration[mRemappedViewAxisX] + 0.5f * MAXIMUM_ACCELERATION * dT * dT;
+                translation[mRemappedViewAxisX] = mLastAcceleration[mRemappedViewAxisX] + 0.5f *
+                        MAXIMUM_ACCELERATION * dT * dT;
             } else {
-                translation[mRemappedViewAxisX] = mLastAcceleration[mRemappedViewAxisX] + 0.5f * accelerationX * dT * dT;
+                translation[mRemappedViewAxisX] = mLastAcceleration[mRemappedViewAxisX] + 0.5f *
+                        accelerationX * dT * dT;
                 mLastAcceleration[mRemappedViewAxisX] = accelerationX;
             }
 
             if (Math.abs(accelerationY) > MAXIMUM_ACCELERATION) {
-                translation[mRemappedViewAxisY] = mLastAcceleration[mRemappedViewAxisY] + 0.5f * MAXIMUM_ACCELERATION * dT * dT;
+                translation[mRemappedViewAxisY] = mLastAcceleration[mRemappedViewAxisY] + 0.5f *
+                        MAXIMUM_ACCELERATION * dT * dT;
             } else {
-                translation[mRemappedViewAxisY] = mLastAcceleration[mRemappedViewAxisY] + 0.5f * accelerationY * dT * dT;
+                translation[mRemappedViewAxisY] = mLastAcceleration[mRemappedViewAxisY] + 0.5f *
+                        accelerationY * dT * dT;
                 mLastAcceleration[mRemappedViewAxisY] = accelerationY;
             }
 
@@ -330,11 +337,15 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
              * In order to keep small variations, the noise is dynamic.
              * We normalized translation and noise it by the means of last and new value.
              */
-            final float normalizerX = (Math.abs(mLastTranslation[mRemappedViewAxisX]) + Math.abs(translation[mRemappedViewAxisX])) / 2;
-            final float normalizerY = (Math.abs(mLastTranslation[mRemappedViewAxisY]) + Math.abs(translation[mRemappedViewAxisY])) / 2;
+            final float normalizerX = (Math.abs(mLastTranslation[mRemappedViewAxisX]) +
+                    Math.abs(translation[mRemappedViewAxisX])) / 2;
+            final float normalizerY = (Math.abs(mLastTranslation[mRemappedViewAxisY]) +
+                    Math.abs(translation[mRemappedViewAxisY])) / 2;
 
-            final float translationDifX = Math.abs(mLastTranslation[mRemappedViewAxisX] - translation[mRemappedViewAxisX]) / normalizerX;
-            final float translationDifY = Math.abs(mLastTranslation[mRemappedViewAxisY] - translation[mRemappedViewAxisY]) / normalizerY;
+            final float translationDifX = Math.abs(mLastTranslation[mRemappedViewAxisX] -
+                    translation[mRemappedViewAxisX]) / normalizerX;
+            final float translationDifY = Math.abs(mLastTranslation[mRemappedViewAxisY] -
+                    translation[mRemappedViewAxisY]) / normalizerY;
 
             final float dynamicNoiseX = TRANSLATION_NOISE / normalizerX;
             final float dynamicNoiseY = TRANSLATION_NOISE / normalizerY;
@@ -360,8 +371,12 @@ public class ParallaxRelativeLayout extends RelativeLayout implements SensorEven
              */
             if (newTranslation != null) {
 
-                newTranslation[mRemappedViewAxisX] = mLastTranslation[mRemappedViewAxisX] + (newTranslation[mRemappedViewAxisX] - mLastTranslation[mRemappedViewAxisX]) / LOW_PASS_FILTER_SMOOTHING;
-                newTranslation[mRemappedViewAxisY] = mLastTranslation[mRemappedViewAxisY] + (newTranslation[mRemappedViewAxisY] - mLastTranslation[mRemappedViewAxisY]) / LOW_PASS_FILTER_SMOOTHING;
+                newTranslation[mRemappedViewAxisX] = mLastTranslation[mRemappedViewAxisX] +
+                        (newTranslation[mRemappedViewAxisX] - mLastTranslation[mRemappedViewAxisX]) /
+                                LOW_PASS_FILTER_SMOOTHING;
+                newTranslation[mRemappedViewAxisY] = mLastTranslation[mRemappedViewAxisY] +
+                        (newTranslation[mRemappedViewAxisY] - mLastTranslation[mRemappedViewAxisY]) /
+                                LOW_PASS_FILTER_SMOOTHING;
 
                 if (mParallaxAnimator.isRunning()) {
                     mParallaxAnimator.cancel();

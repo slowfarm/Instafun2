@@ -35,7 +35,7 @@ public class UserWallActivity extends AppCompatActivity implements SwipyRefreshL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_wall);
 
-        mSwipeRefreshLayout = (SwipyRefreshLayout)findViewById(R.id.swipyrefreshlayout);
+        mSwipeRefreshLayout = (SwipyRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         Intent intent = this.getIntent();
@@ -44,7 +44,7 @@ public class UserWallActivity extends AppCompatActivity implements SwipyRefreshL
             comments = intent.getParcelableArrayListExtra("comments");
         }
         userData.comments = comments;
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new UserWallAdapter(this, userData);
         recyclerView.setAdapter(adapter);
@@ -52,12 +52,22 @@ public class UserWallActivity extends AppCompatActivity implements SwipyRefreshL
 
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
+        String json = "";
         try {
-            String json = new UserDataTask(userData.username, userData.maxId).execute().get();
+            json = new UserDataTask(userData.username, userData.maxId).execute().get();
             userData.add(new Parser().userDataParser(json));
-        } catch (InterruptedException | ExecutionException | JSONException e) {
+        } catch (JSONException e){
             e.printStackTrace();
-            Toast.makeText(this, "End of list", Toast.LENGTH_SHORT).show();
+            switch(json) {
+                case "UnknownHostException":
+                    Toast.makeText(this, "no connection", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Toast.makeText(this, "End of list", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
         adapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);

@@ -22,19 +22,12 @@ public class SplashActivity extends AppCompatActivity {
     private WebView mWebView;
     private Snackbar snackbar;
 
-    String request;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
         helper = Database.getInstance(this);
-
-        request = "https://www.instagram.com/oauth/authorize?client_id="
-                + getString(R.string.client_id)+"&redirect_uri="
-                +getString(R.string.redirect_uri)+"&scope=basic+public_content&response_type=token";
 
         snackbar = Snackbar.make(findViewById(R.id.coordinator_layout), "No connection",
                 Snackbar.LENGTH_INDEFINITE);
@@ -57,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
                         mWebView.getSettings().setJavaScriptEnabled(true);
                         mWebView.getSettings().setDomStorageEnabled(true);
                         mWebView.setWebViewClient(new MyWebViewClient());
-                        mWebView.loadUrl(request);
+                        mWebView.loadUrl(getString(R.string.request));
                     }
                 });
             }}).start();
@@ -71,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
             if (url.contains("access_token=")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("url", url);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class)
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class)
                         .putExtra("url", url);
                 startActivity(intent);
                 finish();
@@ -88,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
             if (url.contains("access_token=")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("url", url);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class)
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class)
                         .putExtra("url", url);
                 startActivity(intent);
                 finish();

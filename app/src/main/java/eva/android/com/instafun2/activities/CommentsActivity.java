@@ -34,7 +34,7 @@ public class CommentsActivity extends AppCompatActivity {
                 .placeholder(R.drawable.ic_photo)
                 .error(R.drawable.ic_error)
                 .into(imageView);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         CommentsAdapter adapter = new CommentsAdapter(comments);
         recyclerView.setAdapter(adapter);

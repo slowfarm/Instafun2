@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             String maxId = "";
             json = new UserDataTask(username, maxId).execute().get();
             UserData userData = new Parser().userDataParser(json);
-            intent = new Intent(MainActivity.this, UserWallActivity.class);
+            intent = new Intent(this, UserWallActivity.class);
             bundle.putParcelable("userData", userData);
             bundle.putParcelableArrayList("comments", userData.comments);
             intent.putExtras(bundle);
@@ -98,13 +98,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             switch(json) {
                 case "UnknownHostException":
-                    Toast.makeText(MainActivity.this, "no connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "no connection", Toast.LENGTH_SHORT).show();
                     break;
                 case "FileNotFoundException":
-                    Toast.makeText(MainActivity.this, "no such user", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "no such user", Toast.LENGTH_SHORT).show();
                     break;
                 default:
-                    Toast.makeText(MainActivity.this, "access denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "access denied", Toast.LENGTH_SHORT).show();
                     break;
             }
         } catch (InterruptedException | ExecutionException e) {
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //compares two arrays
+    //looking for the differences
     private boolean equalizer(ArrayList<UserData> data1, UserData data2) {
         boolean flag = true;
         for(int i=0; i< data1.size(); i++)
